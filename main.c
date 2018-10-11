@@ -218,7 +218,7 @@ int main(void) {
 	conf_general_read_app_configuration(&appconf);
 	app_set_configuration(&appconf);
 
-	debug_print("Start VESC 6 system... \r\n", 25);
+	debug_print_ex("Start VESC 6 system... \r\n");
 
 
 #ifdef HW_HAS_PERMANENT_NRF
