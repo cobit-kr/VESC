@@ -88,11 +88,11 @@ void packet_process_byte(uint8_t rx_data, int handler_num) {
  	uint8_t buff[20] = {0,};
 	switch (handler_states[handler_num].rx_state) {
 	case 0:
-		debug_print("-----\r\n", 7);
+		//debug_print("-----\r\n", 7);
 		if (rx_data == 2) {
 			// 1 byte PL len
 			sprintf(buff,"START %d \r\n", rx_data);
-			debug_print(buff, strlen(buff));
+			//debug_print(buff, strlen(buff));
 			handler_states[handler_num].rx_state += 2;
 			handler_states[handler_num].rx_timeout = PACKET_RX_TIMEOUT;
 			handler_states[handler_num].rx_data_ptr = 0;
@@ -100,7 +100,7 @@ void packet_process_byte(uint8_t rx_data, int handler_num) {
 		} else if (rx_data == 3) {
 			// 2 byte PL len
 			sprintf(buff,"START %d \r\n", rx_data);
-			debug_print(buff, strlen(buff));
+			//debug_print(buff, strlen(buff));
 			handler_states[handler_num].rx_state++;
 			handler_states[handler_num].rx_timeout = PACKET_RX_TIMEOUT;
 			handler_states[handler_num].rx_data_ptr = 0;
@@ -114,7 +114,7 @@ void packet_process_byte(uint8_t rx_data, int handler_num) {
 		for(uint8_t j=0;j<10;j++)
 			buff[j] = 0x00;
 		sprintf(buff,"LENU %d \r\n", rx_data);
-		debug_print(buff, strlen(buff));
+		//debug_print(buff, strlen(buff));
 		handler_states[handler_num].payload_length = (unsigned int)rx_data << 8;
 		handler_states[handler_num].rx_state++;
 		handler_states[handler_num].rx_timeout = PACKET_RX_TIMEOUT;
@@ -124,7 +124,7 @@ void packet_process_byte(uint8_t rx_data, int handler_num) {
 		for(uint8_t j=0;j<10;j++)
 			buff[j] = 0x00;
 		sprintf(buff,"LENL %d \r\n", rx_data);
-		debug_print(buff, strlen(buff));
+		//debug_print(buff, strlen(buff));
 		handler_states[handler_num].payload_length |= (unsigned int)rx_data;
 		if (handler_states[handler_num].payload_length > 0 &&
 				handler_states[handler_num].payload_length <= PACKET_MAX_PL_LEN) {
@@ -139,7 +139,7 @@ void packet_process_byte(uint8_t rx_data, int handler_num) {
 		for(uint8_t j=0;j<10;j++)
 			buff[j] = 0x00;
 		sprintf(buff,"CMD %d \r\n", rx_data);
-		debug_print(buff, strlen(buff));
+		//debug_print(buff, strlen(buff));
 		handler_states[handler_num].rx_buffer[handler_states[handler_num].rx_data_ptr++] = rx_data;
 		if (handler_states[handler_num].rx_data_ptr == handler_states[handler_num].payload_length) {
 			handler_states[handler_num].rx_state++;
@@ -151,7 +151,7 @@ void packet_process_byte(uint8_t rx_data, int handler_num) {
 		for(uint8_t j=0;j<10;j++)
 			buff[j] = 0x00;
 		sprintf(buff,"CRCH %d \r\n", rx_data);
-		debug_print(buff, strlen(buff));
+		//debug_print(buff, strlen(buff));
 		handler_states[handler_num].crc_high = rx_data;
 		handler_states[handler_num].rx_state++;
 		handler_states[handler_num].rx_timeout = PACKET_RX_TIMEOUT;
@@ -161,7 +161,7 @@ void packet_process_byte(uint8_t rx_data, int handler_num) {
 		for(uint8_t j=0;j<10;j++)
 			buff[j] = 0x00;
 		sprintf(buff,"CRCL %d \r\n", rx_data);
-		debug_print(buff, strlen(buff));
+		//debug_print(buff, strlen(buff));
 		handler_states[handler_num].crc_low = rx_data;
 		handler_states[handler_num].rx_state++;
 		handler_states[handler_num].rx_timeout = PACKET_RX_TIMEOUT;
@@ -171,7 +171,7 @@ void packet_process_byte(uint8_t rx_data, int handler_num) {
 		for(uint8_t j=0;j<10;j++)
 			buff[j] = 0x00;
 		sprintf(buff,"END %d \r\n", rx_data);
-		debug_print(buff, strlen(buff));
+		//debug_print(buff, strlen(buff));
 		if (rx_data == 3) {
 			if (crc16(handler_states[handler_num].rx_buffer, handler_states[handler_num].payload_length)
 					== ((unsigned short)handler_states[handler_num].crc_high << 8
@@ -184,7 +184,7 @@ void packet_process_byte(uint8_t rx_data, int handler_num) {
 			}
 		}
 		handler_states[handler_num].rx_state = 0;
-		debug_print("-----\r\n", 7);
+		//debug_print("-----\r\n", 7);
 		break;
 
 	default:

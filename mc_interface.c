@@ -436,7 +436,7 @@ void mc_interface_set_current(float current) {
 }
 
 void mc_interface_set_brake_current(float current) {
-	debug_print_ex("mc_if_set_brake_current\r\n");
+	//debug_print_ex("mc_if_set_brake_current\r\n");
 	if (mc_interface_try_input()) {
 		//return;
 	}
@@ -988,7 +988,7 @@ float mc_interface_temp_motor_filtered(void) {
  *
  */
 int mc_interface_try_input(void) {
-	debug_print("mc_if_try_input \r\n", 18);
+	//debug_print("mc_if_try_input \r\n", 18);
 	// TODO: Remove this later
 	if (mc_interface_get_state() == MC_STATE_DETECTING) {
 		mcpwm_stop_pwm();

@@ -219,8 +219,6 @@ int main(void) {
 	app_set_configuration(&appconf);
 
 	debug_print_ex("Start VESC 6 system... \r\n");
-	debug_print_ex("Commit test  \r\n");
-
 
 #ifdef HW_HAS_PERMANENT_NRF
 	conf_general_permanent_nrf_found = nrf_driver_init();

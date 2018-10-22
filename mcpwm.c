@@ -953,6 +953,7 @@ static void set_duty_cycle_hl(float dutyCycle) {
 	debug_print("set_duty_cycle_hl \r\n", 20);
 
 	if (state == MC_STATE_DETECTING) {
+		debug_print_ex("test0 \r\n");
 		stop_pwm_ll();
 		return;
 	}
@@ -966,21 +967,26 @@ static void set_duty_cycle_hl(float dutyCycle) {
 			if (fabsf(dutycycle_now) < conf->l_min_duty) {
 				dutycycle_now = SIGN(dutyCycle) * conf->l_min_duty;
 			}
-
+			debug_print_ex("test1 \r\n");
 			set_duty_cycle_ll(dutycycle_now);
 		} else {
 			// In case the motor is already spinning, set the state to running
 			// so that it can be ramped down before the full brake is applied.
 			if (conf->motor_type == MOTOR_TYPE_DC) {
+				debug_print_ex("test2 \r\n");
 				if (fabsf(dutycycle_now) > 0.1) {
+					debug_print_ex("test6 \r\n");
 					state = MC_STATE_RUNNING;
 				} else {
+					debug_print_ex("test3 \r\n");
 					full_brake_ll();
 				}
 			} else {
 				if (fabsf(rpm_now) > conf->l_max_erpm_fbrake) {
+					debug_print_ex("test4  \r\n");
 					state = MC_STATE_RUNNING;
 				} else {
+					debug_print_ex("test5 \r\n");
 					full_brake_ll();
 				}
 			}
